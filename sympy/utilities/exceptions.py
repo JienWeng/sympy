@@ -5,7 +5,10 @@ from __future__ import annotations
 
 import warnings
 import contextlib
-import collections.abc as _abc  # noqa: TC003
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
 
 from textwrap import dedent
 
@@ -105,7 +108,7 @@ will be removed in a future version of SymPy.
     def __reduce__(
         self,
     ) -> tuple[
-        _abc.Callable[[str, str, str], SymPyDeprecationWarning],
+        Callable[[str, str, str], SymPyDeprecationWarning],
         tuple[str, str, str],
     ]:
         return (self._new, (self.message, self.deprecated_since_version, self.active_deprecations_target))
@@ -230,7 +233,7 @@ def sympy_deprecation_warning(
 
 
 @contextlib.contextmanager
-def ignore_warnings(warningcls: type[Warning]) -> _abc.Iterator[None]:
+def ignore_warnings(warningcls: type[Warning]) -> Iterator[None]:
     '''
     Context manager to suppress warnings during tests.
 
